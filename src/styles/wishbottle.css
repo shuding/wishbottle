@@ -1,0 +1,153 @@
+/**
+* Created by shuding on 9/12/15.
+* <ds303077135@gmail.com>
+*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(MaterialIcons-Regular.woff2) format('woff2'),
+  url(MaterialIcons-Regular.woff) format('woff'),
+  url(MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+body {
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f6f6f6;
+  overflow: hidden;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+.button {
+  border: 1px solid;
+  border-radius: 4px;
+}
+.button.no-frame {
+  border: none;
+}
+
+.gradient-0 {
+  background: -webkit-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* IE10 */
+  background:      -o-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #485563 10%, #29323c 90%); /* W3C */
+}
+
+.gradient-1 {
+  background: -webkit-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* IE10 */
+  background:      -o-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #005C97 10%, #363795 90%); /* W3C */
+}
+
+.gradient-2 {
+  background: -webkit-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* IE10 */
+  background:      -o-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* W3C */
+}
+
+.gradient-3 {
+  background: -webkit-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* IE10 */
+  background:      -o-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* W3C */
+}
+
+.gradient-4 {
+  background: -webkit-linear-gradient(to bottom, #232526 10%, #414345 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(to bottom, #232526 10%, #414345 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(to bottom, #232526 10%, #414345 90%); /* IE10 */
+  background:      -o-linear-gradient(to bottom, #232526 10%, #414345 90%); /* Opera 11.10+ */
+  background:         linear-gradient(to bottom, #232526 10%, #414345 90%); /* W3C */
+}
+
+#container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+}
+
+#control-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 10px;
+  z-index: 3;
+}
+
+#mute-button {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#copyright {
+  position: absolute;
+  bottom: 0;
+  margin: 10px;
+  font-size: 12px;
+  z-index: 0;
+}
+
+#copyright img {
+  width: 37px;
+  height: 18px;
+  vertical-align: baseline;
+}
+
+#canvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+#canvas-background {
+  width: 100%;
+  height: 100%;
+}
