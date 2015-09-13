@@ -20,17 +20,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/STU-Fudan/wishbottle"
+    "url": "github.com/quietshu/wishbottle"
   },
   "author": " <ds303077135@gmail.com>",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/STU-Fudan/wishbottle/issues"
+    "url": "https://github.com/quietshu/wishbottle/issues"
   },
-  "homepage": "https://github.com/STU-Fudan/wishbottle",
+  "homepage": "https://github.com/quietshu/wishbottle",
   "dependencies": {
     "browsernizr": "^1.1.0",
-    "fastclick": "^1.0.6",
     "jquery": "^2.1.4",
     "modernizr": "^3.0.0",
     "normalize.css": "^3.0.3"
