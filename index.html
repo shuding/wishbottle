@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>许愿瓶</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="wishbottle.css">
+    <script type="text/javascript" src="lib.min.js"></script>
+    <script type="text/javascript" src="jweixin.js"></script>
+  </head>
+  <body>
+    <!-- background music-->
+    <audio id="bg-music" preload="preload" src="our_same_word_compress.mp3" loop autoplay="true"></audio>
+    <div id="container">
+      <div id="copyright"><img src="stu_logo.png"><br><span>Copyright © 2015 Fudan STU, All rights reserved.</span></div>
+      <div id="canvas">
+        <canvas id="canvas-background"></canvas>
+      </div>
+      <div id="editor"></div>
+      <div id="control-buttons"><a id="mute-button" class="button no-frame"><i class="material-icons">&#xE050;</i></a></div>
+    </div>
+    <script type="text/javascript" src="wishbottle.min.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+      
+    </script>
+  </body>
+</html>
+<!-- compiled with jade-->
