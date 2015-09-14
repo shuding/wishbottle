@@ -20,7 +20,7 @@
             if (typeof va.elements === 'undefined') {
                 va.elements = [];
             }
-            element.width = va.width;
+            element.width  = va.width;
             element.height = va.height;
             va.elements.push(element);
         };
@@ -28,7 +28,7 @@
             va.width  = window.innerWidth;
             va.height = window.innerHeight;
             va.elements && va.elements.forEach(function (element) {
-                element.width = va.width;
+                element.width  = va.width;
                 element.height = va.height;
             });
         });
@@ -92,12 +92,58 @@
         drawFrame();
     }
 
+    function editorShow() {
+        el.$canvasBackground.addClass('scaled');
+        el.$editorBox.addClass('expanded');
+        st.canvasBackgroundScaled = true;
+    }
+
+    function editorHide() {
+        el.$canvasBackground.removeClass('scaled');
+        el.$editorBox.removeClass('expanded');
+        st.canvasBackgroundScaled = false;
+    }
+
+    function editorInit() {
+
+    }
+
+    function bottleInit() {
+        el.$bottle    = $('#bottle');
+        el.$editorBox = $('#editor-box');
+
+        el.$bottle.click(function () {
+            if (st.canvasBackgroundScaled) {
+                editorHide();
+            } else {
+                editorShow();
+            }
+        });
+    }
+
+    function orientationInit() {
+        el.$editor = $('#editor');
+
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function (event) {
+                var x = Math.floor(event.beta * 2);
+                var y = Math.floor(event.gamma * 2);
+                el.$editor.css({
+                    'margin-left': y + 'px',
+                    'margin-top': x + 'px'
+                });
+            });
+        }
+    }
+
     function init() {
         backgroundMusicInit();
         backgroundMusicPlay();
         modernizrInit(function () {
             // Canvas valid
             backgroundCanvasInit();
+            bottleInit();
+            orientationInit();
         });
     }
 
