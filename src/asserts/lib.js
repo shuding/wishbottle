@@ -6,5 +6,6 @@
 require('browsernizr/test/canvas');
 window.Modernizr = require('browsernizr');
 window.Firefly = require('./firefly');
+window.API = require('./api');
 
 window.jQuery = require('jquery');
