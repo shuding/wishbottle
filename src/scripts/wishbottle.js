@@ -94,13 +94,13 @@
 
     function editorShow() {
         el.$canvasBackground.addClass('scaled');
-        el.$editorBox.addClass('expanded');
+        el.$editor.addClass('expanded');
         st.canvasBackgroundScaled = true;
     }
 
     function editorHide() {
         el.$canvasBackground.removeClass('scaled');
-        el.$editorBox.removeClass('expanded');
+        el.$editor.removeClass('expanded');
         st.canvasBackgroundScaled = false;
     }
 
@@ -109,8 +109,8 @@
     }
 
     function bottleInit() {
-        el.$bottle    = $('#bottle');
-        el.$editorBox = $('#editor-box');
+        el.$bottle = $('#bottle');
+        el.$editor = $('#editor');
 
         el.$bottle.click(function () {
             if (st.canvasBackgroundScaled) {
@@ -122,23 +122,36 @@
     }
 
     function orientationInit() {
-        el.$editor = $('#editor');
+        el.$canvas = $('#canvas');
 
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function (event) {
-                var x = Math.floor(event.beta * 2);
-                var y = Math.floor(event.gamma * 2);
-                el.$editor.css({
+                var x = Math.floor(event.beta);
+                var y = Math.floor(event.gamma);
+                el.$canvas.css({
                     'margin-left': y + 'px',
-                    'margin-top': x + 'px'
+                    'margin-top':  x + 'px'
                 });
             });
         }
     }
 
+    function touchmovePrevent() {
+        $('body').on('touchmove', function (event) {
+            event.preventDefault();
+        });
+        $('textarea').on('blur', function () {
+            $('body').scrollTop(0); // Wechat auto-scrolling hack
+        });
+        $('input').on('blur', function () {
+            $('body').scrollTop(0); // Wechat auto-scrolling hack
+        });
+    }
+
     function init() {
         backgroundMusicInit();
         backgroundMusicPlay();
+        touchmovePrevent();
         modernizrInit(function () {
             // Canvas valid
             backgroundCanvasInit();
