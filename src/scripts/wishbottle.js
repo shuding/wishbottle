@@ -105,7 +105,41 @@
     }
 
     function editorInit() {
+        el.$buttonClose = $('#button-close');
+        el.$buttonSubmit = $('#button-submit');
+        el.$buttonShare = $('#button-share');
 
+        el.$buttonClose.click(function () {
+            editorHide();
+        });
+        el.$editor.click(function (event) {
+            // TODO: bug with the classList
+            console.log(event);
+            if ([].indexOf.call(event.target.classList, 'editor-box') == -1) {
+                editorHide();
+                event.preventDefault();
+            }
+        });
+
+        el.$buttonSubmit.click(function () {
+            // TODO: get data
+            var data;
+            window.API.post(data, function (err) {
+                if (err) {
+                    // TODO: handle error
+                } else {
+                    // TODO: submit success
+                }
+            });
+        });
+
+        el.$buttonShare.click(function () {
+            // TODO: share using wechat API
+        });
+    }
+
+    function editorCompile(data) {
+        // TODO
     }
 
     function bottleInit() {
@@ -148,6 +182,29 @@
         });
     }
 
+    function detectHash() {
+        var hash = window.location.hash;
+        if (hash && hash !== '#') {
+            try {
+                hash = Number(hash.split('#')[0]);
+            } catch (err) {
+                return;
+            }
+        } else {
+            return;
+        }
+
+        window.API.get({
+            id: hash
+        }, function (err, data) {
+            if (err) {
+                // TODO: handle error
+            } else {
+                // TODO: display data
+            }
+        });
+    }
+
     function init() {
         backgroundMusicInit();
         backgroundMusicPlay();
@@ -156,7 +213,10 @@
             // Canvas valid
             backgroundCanvasInit();
             bottleInit();
+            editorInit();
             orientationInit();
+
+            detectHash();
         });
     }
 
