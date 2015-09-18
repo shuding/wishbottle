@@ -7,6 +7,53 @@
     var st = {};
     var va = {};
 
+    var dataCache = [];
+    var dataQueue = [];
+    var queueSt   = 0;
+    var queueEd   = 0;
+    var queueLn   = 10;
+
+    var api = new window.API($);
+
+    function addCache(data) {
+        [].forEach.call(data, function (item) {
+            if (typeof dataCache[item._id] === 'undefined') {
+                dataCache[item._id] = item;
+            }
+            var wish = new window.Wish(item);
+            dataQueue.push(wish);
+        });
+    }
+
+    function queuePush(callback) {
+        api.get({
+            offset: queueEd
+        }, function (err, data) {
+            if (!err) {
+                addCache(data);
+            }
+            callback && callback(err);
+        });
+    }
+
+    function queueInit() {
+        queuePush(function (err) {
+            if (!err) {
+                setInterval(function () {
+                    if (queueEd < dataQueue.length) {
+                        if (queueEd - queueSt > queueLn) {
+                            dataQueue[queueSt++].stop();
+                        }
+                        dataQueue[queueEd].play();
+                        ++queueEd;
+                    } else {
+                        queuePush();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
     function modernizrInit(callback) {
         el.$copyright = $('#copyright');
         el.$container = $('#container');
@@ -105,17 +152,16 @@
     }
 
     function editorInit() {
-        el.$buttonClose = $('#button-close');
+        el.$editorBox    = $('#editor-box');
+        el.$buttonClose  = $('#button-close');
         el.$buttonSubmit = $('#button-submit');
-        el.$buttonShare = $('#button-share');
+        el.$buttonShare  = $('#button-share');
 
         el.$buttonClose.click(function () {
             editorHide();
         });
         el.$editor.click(function (event) {
-            // TODO: bug with the classList
-            console.log(event);
-            if ([].indexOf.call(event.target.classList, 'editor-box') == -1) {
+            if ([].indexOf.call(event.originalEvent.path, el.$editorBox[0]) == -1) {
                 editorHide();
                 event.preventDefault();
             }
@@ -124,7 +170,7 @@
         el.$buttonSubmit.click(function () {
             // TODO: get data
             var data;
-            window.API.post(data, function (err) {
+            api.post(data, function (err) {
                 if (err) {
                     // TODO: handle error
                 } else {
@@ -139,7 +185,9 @@
     }
 
     function editorCompile(data) {
-        // TODO
+        console.log(data);
+        el.$editorBox.find('input').val(data.name);
+        el.$editorBox.find('textarea').val(data.content);
     }
 
     function bottleInit() {
@@ -194,13 +242,16 @@
             return;
         }
 
-        window.API.get({
-            id: hash
+        api.get({
+            offset: hash
         }, function (err, data) {
             if (err) {
                 // TODO: handle error
             } else {
                 // TODO: display data
+                addCache(data);
+                editorCompile(data[0]);
+                editorShow();
             }
         });
     }
@@ -215,6 +266,7 @@
             bottleInit();
             editorInit();
             orientationInit();
+            queueInit();
 
             detectHash();
         });

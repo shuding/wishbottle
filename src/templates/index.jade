@@ -32,10 +32,16 @@ html(lang="zh-cmn-Hans")
                   textarea(placeholder="祝福", rows="7", maxlength="100")
                   p(style="margin: 0; text-align: right; color: #bbb")
                      small 不超过 100 字
-               div.button-container
-                  button#button-close x
-                  button#button-submit submit
-                  button#button-share share
+               div#button-container
+                  button#button-close
+                     i.material-icons
+                        &#xE5CD;
+                  button#button-submit 发送祝福
+                     i.material-icons
+                        &#xE163;
+                  button#button-share 分享
+                     i.material-icons
+                        &#xE80D;
          div#control-buttons
             a#mute-button.button.no-frame
                i.material-icons

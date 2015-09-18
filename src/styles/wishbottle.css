@@ -24,6 +24,7 @@
   line-height: 1;
   text-transform: none;
   letter-spacing: normal;
+  vertical-align: middle;
   word-wrap: normal;
 
   /* Support for all WebKit browsers. */
@@ -279,4 +280,20 @@ body {
 }
 #editor-box h3 {
   text-align: center;
+}
+#button-container {
+  margin: 20px 0;
+  text-align: center;
+}
+#button-share {
+  display: none;
+}
+#button-submit {
+  width: 70%;
+}
+#button-container.submitted > #button-share {
+  display: inherit;
+}
+#button-container.submitted > #button-submit {
+  display: none;
 }
