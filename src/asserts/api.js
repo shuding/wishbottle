@@ -20,22 +20,22 @@ var API = function (jQuery) {
     this.jQuery = jQuery;
     this.jQuery.ajaxSetup({
         contentType: "text/html; charset=unicode",
-        dataType: 'json'
+        dataType:    'json'
     });
 
     this.domain = 'http://stu.fudan.edu.cn/wish_bottle/api';
     this.path   = {
-        post:   '/',
+        post:   '/post',
         get:    '/get',
-        star:   '/',
-        unstar: '/'
+        star:   '/star',
+        unstar: '/unstar'
     };
 };
 
 // Initialization
 API.prototype.post = function (data, callback) {
-    var pack = parseData(data, ['nickname', 'content']);
-    if (!pack.nickname) {
+    var pack = parseData(data, ['name', 'content']);
+    if (!pack.name) {
         callback && callback('Nickname should not be empty');
         return;
     }
@@ -43,18 +43,26 @@ API.prototype.post = function (data, callback) {
         callback && callback('Content should not be empty');
         return;
     }
+    pack.type      = 'time';
+    pack.timestamp = (new Date()).getTime();
     this.jQuery.post(this.domain + this.path.post, pack).success(function (data) {
         callback && callback(null, data);
+    }).error(function () {
+        callback && callback('Sorry, an unexpected error has occurred');
     });
 };
 
 API.prototype.get = function (data, callback) {
-    var pack = parseData(data, ['offset']);
+    var pack = parseData(data, ['offset', 'type', '_id']);
     if (typeof pack.offset === "undefined" || pack.offset < 0) {
         pack.offset = 0;
     }
+    if (typeof pack.type === 'undefined') {
+        pack.type = 'time';
+    }
+    pack.timestamp = (new Date()).getTime();
     this.jQuery.get(this.domain + this.path.get, pack).success(function (data) {
-        callback && callback(null, data);
+        callback && callback(null, data.response);
     });
 };
 

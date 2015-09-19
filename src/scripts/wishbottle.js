@@ -18,10 +18,13 @@
     function addCache(data) {
         [].forEach.call(data, function (item) {
             if (typeof dataCache[item._id] === 'undefined') {
-                dataCache[item._id] = item;
+                dataCache[item._id] = true;
+                var wish            = new window.Wish(item, el.$canvasElements, va, function () {
+                    editorCompile(item);
+                    editorShow();
+                });
+                dataQueue.push(wish);
             }
-            var wish = new window.Wish(item);
-            dataQueue.push(wish);
         });
     }
 
@@ -39,17 +42,16 @@
     function queueInit() {
         queuePush(function (err) {
             if (!err) {
-                setInterval(function () {
+                console.log(dataQueue);
+                while (queueEd - queueSt < queueLn) {
                     if (queueEd < dataQueue.length) {
-                        if (queueEd - queueSt > queueLn) {
-                            dataQueue[queueSt++].stop();
-                        }
                         dataQueue[queueEd].play();
-                        ++queueEd;
+                        queueEd++;
                     } else {
-                        queuePush();
+                        queueInit();
+                        break;
                     }
-                }, 1000);
+                }
             }
         });
     }
@@ -117,6 +119,7 @@
     }
 
     function backgroundCanvasInit() {
+        el.$canvasElements   = $('#canvas-elements');
         el.$canvasBackground = $('#canvas-background');
         el.bgCtx             = el.$canvasBackground[0].getContext('2d');
         va.bindSize(el.$canvasBackground[0]);
@@ -139,23 +142,42 @@
         drawFrame();
     }
 
+    function editorLock(name) {
+        el.$editorHeading.text((name || '无名氏') + ' 说：');
+        el.$editorBox.addClass('submitted');
+        el.$editorBox.find('input').attr('disabled', 'disabled');
+        el.$editorBox.find('textarea').attr('disabled', 'disabled');
+    }
+
+    function editorUnlock() {
+        el.$editorHeading.text('写下你的祝福');
+        el.$editorBox.removeClass('submitted');
+        el.$editorBox.find('input').attr('disabled', null);
+        el.$editorBox.find('textarea').attr('disabled', null);
+        el.$editorBox.find('input').val('');
+        el.$editorBox.find('textarea').val('');
+    }
+
     function editorShow() {
-        el.$canvasBackground.addClass('scaled');
+        el.$canvas.addClass('scaled');
         el.$editor.addClass('expanded');
         st.canvasBackgroundScaled = true;
     }
 
     function editorHide() {
-        el.$canvasBackground.removeClass('scaled');
+        setTimeout(editorUnlock, 1000);
+        el.$canvas.removeClass('scaled');
         el.$editor.removeClass('expanded');
         st.canvasBackgroundScaled = false;
     }
 
     function editorInit() {
-        el.$editorBox    = $('#editor-box');
-        el.$buttonClose  = $('#button-close');
-        el.$buttonSubmit = $('#button-submit');
-        el.$buttonShare  = $('#button-share');
+        el.$editorBox       = $('#editor-box');
+        el.$editorHeading   = el.$editorBox.find('h3');
+        el.$buttonClose     = $('#button-close');
+        el.$buttonSubmit    = $('#button-submit');
+        el.$buttonShare     = $('#button-share');
+        el.$buttonContainer = $('#button-container');
 
         el.$buttonClose.click(function () {
             editorHide();
@@ -169,25 +191,31 @@
 
         el.$buttonSubmit.click(function () {
             // TODO: get data
-            var data;
-            api.post(data, function (err) {
+            var data = {
+                name:    el.$editorBox.find('input').val(),
+                content: el.$editorBox.find('textarea').val()
+            };
+
+            api.post(data, function (err, data) {
                 if (err) {
-                    // TODO: handle error
+                    alert(err);
                 } else {
-                    // TODO: submit success
+                    console.log(data);
+                    editorLock(data.name);
                 }
             });
         });
 
         el.$buttonShare.click(function () {
-            // TODO: share using wechat API
+
         });
     }
 
     function editorCompile(data) {
-        console.log(data);
         el.$editorBox.find('input').val(data.name);
         el.$editorBox.find('textarea').val(data.content);
+        window.location.hash = data._id;
+        editorLock(data.name);
     }
 
     function bottleInit() {
@@ -231,10 +259,11 @@
     }
 
     function detectHash() {
+
         var hash = window.location.hash;
         if (hash && hash !== '#') {
             try {
-                hash = Number(hash.split('#')[0]);
+                hash = hash.split('#')[1];
             } catch (err) {
                 return;
             }
@@ -242,13 +271,15 @@
             return;
         }
 
+        console.log(hash);
+
         api.get({
-            offset: hash
+            type: '_id',
+            _id:  hash
         }, function (err, data) {
             if (err) {
-                // TODO: handle error
+                alert(err);
             } else {
-                // TODO: display data
                 addCache(data);
                 editorCompile(data[0]);
                 editorShow();

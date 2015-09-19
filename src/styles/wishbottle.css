@@ -157,7 +157,11 @@ body {
   z-index: 1;
 }
 
-#canvas-background {
+#canvas-background, #canvas-elements {
+  position: absolute;
+}
+
+#canvas-background, #canvas-elements {
   width: 100%;
   height: 100%;
   -webkit-transition: all .5s cubic-bezier(0.895, 0.030, 0.105, 0.970);
@@ -173,7 +177,7 @@ body {
   transform-origin: 50% 100%;
 }
 
-#canvas-background.scaled {
+.scaled > #canvas-background, .scaled > #canvas-elements {
   -webkit-transform: scale(4);
   -moz-transform: scale(4);
   -ms-transform: scale(4);
@@ -293,10 +297,10 @@ body {
   text-align: center;
   white-space: nowrap;
 }
-#button-container.submitted > #button-share {
+.submitted #button-share {
   display: inherit;
 }
-#button-container.submitted > #button-submit {
+.submitted #button-submit {
   display: none;
 }
 #button-container button {
@@ -330,12 +334,30 @@ button#button-close {
   display: none;
   float: left;
   width: calc(100% - 100px);
-  background: #0DA6E0;
-  text-shadow: 0 0 1px #056F9C;
+  background: #FF0455;
+  text-shadow: 0 0 1px #F00;
 }
 #button-submit {
   float: left;
   width: calc(100% - 100px);
   background: #0DA6E0;
   text-shadow: 0 0 1px #056F9C;
+}
+.submitted input {
+  display: none;
+}
+#editor-box.submitted textarea {
+  border: none;
+}
+.submitted textarea + p {
+  display: none;
+}
+#canvas-elements > div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 0 10px 2px;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
