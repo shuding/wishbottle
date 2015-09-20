@@ -11,7 +11,7 @@
     var dataQueue = [];
     var queueSt   = 0;
     var queueEd   = 0;
-    var queueLn   = 10;
+    var queueLn   = 20;
 
     var api = new window.API($);
 
@@ -270,8 +270,6 @@
         } else {
             return;
         }
-
-        console.log(hash);
 
         api.get({
             type: '_id',

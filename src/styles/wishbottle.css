@@ -202,16 +202,17 @@ body {
   left: 0;
   right: 0;
   bottom: 30px;
-  width: 50px;
-  height: 50px;
+  width: 90px;
+  height: 144px;
   margin: auto;
   z-index: 2;
 }
 
 #bottle {
-  width: 50px;
-  height: 50px;
-  background-color: #fff;
+  width: 90px;
+  height: 144px;
+  background-image: url(bottle.png);
+  cursor: pointer;
 }
 
 #editor-box {
@@ -354,10 +355,19 @@ button#button-close {
 }
 #canvas-elements > div {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  box-shadow: 0 0 10px 2px;
+  width: 50px;
+  height: 45px;
+  padding: 15px 5px 0 5px;
+  border-radius: 50%;
   overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 15px;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  text-shadow: 0 0 30px #fff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
 }

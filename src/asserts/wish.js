@@ -6,24 +6,27 @@
 function Wish(data, $container, sz, callback) {
     this.data         = data;
     this.el           = document.createElement('div');
-    this.el.innerText = data.name || '无名氏';
+    this.el.innerText = (data.name || '无名氏');
+    this.el.innerHTML += '<br>的祝福';
     this.$container   = $container;
 
     this.x  = Math.random();
     this.y  = Math.random();
     this.dx = (Math.random() - .5) * .002;
     this.dy = (Math.random() - .5) * .002;
+    var self = this;
 
     var transformList = ['-webkit-transform', '-moz-transform', '-ms-transform', '-o-transform', 'transform'];
 
     this.move = function () {
-        var self = this;
         transformList.forEach(function (t) {
             self.el.style[t] = 'translateX(' + (self.x * sz.width) + 'px) translateY(' + (self.y * sz.height) + 'px)';
         });
     };
 
-    this.el.onclick = callback;
+    this.el.onclick = function () {
+        callback();
+    };
 }
 
 Wish.prototype.play = function () {
@@ -47,7 +50,7 @@ Wish.prototype.play = function () {
 };
 
 Wish.prototype.stop = function () {
-
+    //this.$container
 };
 
 module.exports = Wish;
