@@ -1,2 +1,7 @@
 .DS_Store
 .idea
+
+node_modules
+dist/*
+
+xxxx@xxx.com

@@ -13,11 +13,31 @@
     <!-- background music-->
     <audio id="bg-music" preload="preload" src="our_same_word_compress.mp3" loop autoplay="true"></audio>
     <div id="container">
-      <div id="copyright"><img src="stu_logo.png"><br><span>Copyright © 2015 Fudan STU, All rights reserved.</span></div>
+      <div id="copyright"><img src="stu_logo.png"><br><span>Copyright © 2015 Fudan STU. All rights reserved.</span></div>
       <div id="canvas">
         <canvas id="canvas-background"></canvas>
+        <div id="canvas-elements"></div>
       </div>
-      <div id="editor"></div>
+      <div id="bottle-container">
+        <div id="bottle"></div>
+      </div>
+      <div id="editor">
+        <div id="editor-box" class="editor-box">
+          <h3>写下你的祝福</h3>
+          <div class="input-container">
+            <input placeholder="姓名">
+          </div>
+          <div class="input-container">
+            <textarea placeholder="祝福" rows="7" maxlength="100"></textarea>
+            <p style="margin: 0; text-align: right; color: #bbb"><small>不超过 100 字</small></p>
+          </div>
+          <div id="button-container">
+            <button id="button-close"><i class="material-icons">&#xE5CD;</i></button>
+            <button id="button-submit">发送祝福</button>
+            <button id="button-share">分享</button>
+          </div>
+        </div>
+      </div>
       <div id="control-buttons"><a id="mute-button" class="button no-frame"><i class="material-icons">&#xE050;</i></a></div>
     </div>
     <script type="text/javascript" src="wishbottle.min.js"></script>
