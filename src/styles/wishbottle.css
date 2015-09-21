@@ -358,6 +358,8 @@ button#button-close {
   width: 50px;
   height: 45px;
   padding: 15px 5px 0 5px;
+  margin-top: -20px;
+  margin-left: -25px;
   border-radius: 50%;
   overflow: hidden;
   font-size: 12px;
@@ -367,7 +369,23 @@ button#button-close {
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
   text-shadow: 0 0 30px #fff;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
+  color: transparent;
+
+  -webkit-transition: color 1s ease;
+  -moz-transition: color 1s ease;
+  -ms-transition: color 1s ease;
+  -o-transition: color 1s ease;
+  transition: color 1s ease;
+}
+
+#canvas-elements > div > i {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: auto;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 3px #fff;
 }

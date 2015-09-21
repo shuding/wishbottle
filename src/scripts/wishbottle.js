@@ -11,9 +11,18 @@
     var dataQueue = [];
     var queueSt   = 0;
     var queueEd   = 0;
-    var queueLn   = 20;
+    var queueLn   = 10;
+
+    var playList = [];
 
     var api = new window.API($);
+
+    function framePlay() {
+        playList.forEach(function (arr) {
+            arr[1].call(arr[0]);
+        });
+        requestAnimationFrame(framePlay);
+    }
 
     function addCache(data) {
         [].forEach.call(data, function (item) {
@@ -40,12 +49,24 @@
     }
 
     function queueInit() {
+        var stop = function () {
+            if (queueEd < dataQueue.length) {
+                dataQueue[queueEd].play();
+                dataQueue[queueEd].stopSetup(stop);
+                playList.push([dataQueue[queueEd], dataQueue[queueEd].frame]);
+                queueEd++;
+            } else {
+                queuePush(stop);
+            }
+        };
+
         queuePush(function (err) {
             if (!err) {
-                console.log(dataQueue);
                 while (queueEd - queueSt < queueLn) {
                     if (queueEd < dataQueue.length) {
+                        dataQueue[queueEd].stopSetup(stop);
                         dataQueue[queueEd].play();
+                        playList.push([dataQueue[queueEd], dataQueue[queueEd].frame]);
                         queueEd++;
                     } else {
                         queueInit();
@@ -169,6 +190,7 @@
         el.$canvas.removeClass('scaled');
         el.$editor.removeClass('expanded');
         st.canvasBackgroundScaled = false;
+        window.location.hash      = '';
     }
 
     function editorInit() {
@@ -200,7 +222,6 @@
                 if (err) {
                     alert(err);
                 } else {
-                    console.log(data);
                     editorLock(data.name);
                 }
             });
@@ -296,6 +317,7 @@
             editorInit();
             orientationInit();
             queueInit();
+            framePlay();
 
             detectHash();
         });
