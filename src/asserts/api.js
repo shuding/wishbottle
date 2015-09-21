@@ -45,10 +45,17 @@ API.prototype.post = function (data, callback) {
     }
     pack.type      = 'time';
     pack.timestamp = (new Date()).getTime();
-    this.jQuery.post(this.domain + this.path.post, pack).success(function (data) {
-        callback && callback(null, data);
-    }).error(function () {
-        callback && callback('Sorry, an unexpected error has occurred');
+    this.jQuery.ajax({
+        type:     'POST',
+        url:      this.domain + this.path.post,
+        data:     pack,
+        success:  function (data) {
+            callback && callback(null, data);
+        },
+        error:    function () {
+            callback && callback('Sorry, an unexpected error has occurred');
+        },
+        dataType: 'json'
     });
 };
 
