@@ -209,9 +209,10 @@ body {
 }
 
 #bottle {
-  width: 90px;
-  height: 144px;
+  width: 72px;
+  height: 115px;
   background-image: url(bottle.png);
+  background-size: 100% 100%;
   cursor: pointer;
 }
 
@@ -358,8 +359,8 @@ button#button-close {
   width: 50px;
   height: 45px;
   padding: 15px 5px 0 5px;
-  margin-top: -20px;
-  margin-left: -25px;
+  margin-top: -30px;
+  margin-left: -30px;
   border-radius: 50%;
   overflow: hidden;
   font-size: 12px;

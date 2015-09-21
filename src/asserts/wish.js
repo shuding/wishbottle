@@ -32,7 +32,7 @@ function Wish(data, $container, sz, callback) {
 
     var colors        = ["white", "#FF5959", "#FFB84D", "#78DDFF", "#80FF9F", "#ED74C9"];
     var transformList = ['-webkit-transform', '-moz-transform', '-ms-transform', '-o-transform', 'transform'];
-    var bottleSize    = [10, 190];
+    var bottleSize    = [5, 145];
 
     this.color     = colors[~~(Math.random() * 6)];
     this.leftPos   = .5 - bottleSize[0] / sz.width;

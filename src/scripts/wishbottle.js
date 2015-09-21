@@ -108,6 +108,14 @@
         if (window.Modernizr.canvas) {
             callback();
         }
+
+        // WeChat
+
+        window.wx && window.wx.onMenuShareTimeline({
+            title: 'aaa', // 分享标题
+            link: window.location.href, // 分享链接
+            imgUrl: ''
+        });
     }
 
     function backgroundMusicInit() {
