@@ -51,11 +51,10 @@ API.prototype.post = function (data, callback) {
         contentType: 'application/json; charset=utf-8',
         dataType:    'json',
         data:        JSON.stringify(pack),
-        success:     function (data) {
-            callback && callback(null, data);
-        },
-        error:       function () {
-            callback && callback('Sorry, an unexpected error has occurred');
+        complete: function(jqXHR) {
+            if(jqXHR.readyState === 4) {
+                callback && callback(null, pack);
+            }
         }
     });
 };
@@ -66,7 +65,7 @@ API.prototype.get = function (data, callback) {
         pack.offset = 0;
     }
     if (typeof pack.type === 'undefined') {
-        pack.type = 'time';
+        pack.type = 'star';
     }
     pack.timestamp = (new Date()).getTime();
     this.jQuery.get(this.domain + this.path.get, pack).success(function (data) {

@@ -3,42 +3,32 @@
  * <ds303077135@gmail.com>
  */
 
-function Wish(data, $container, sz, callback) {
-    this.data         = data;
-    this.el           = document.createElement('div');
-    this.el.innerText = (data.name || '无名氏');
-    this.el.innerHTML += '<br>的祝福';
-
-    var i = document.createElement('i');
-
-    i.style['left'] = ~~(Math.random() * 40 + 10) + 'px';
-    i.style['top']  = ~~(Math.random() * 40 + 10) + 'px';
-
-    this.el.appendChild(i);
-
-    this.$container = $container;
+function Wish(data, ctx, sz, callback) {
+    this.data       = data;
+    this.firstLine  = (data.name || '无名氏');
+    this.secondLine = '的祝福';
 
     this.x  = .5;
-    this.y  = 1 - 100 / sz.height;
+    this.y  = 1 - (70 + Math.random() * 10) / sz.height;
     this.dx = (Math.random() * 0.005 - 0.0025);
-    this.dy = -Math.random() * 0.0005;
-    this.fy = 0;
+    this.dy = -Math.random() * 0.0005 - 0.0005;
+    this.fy = -0.001;
     this.fx = 0;
+    this.r  = 0;
 
     this.hover   = false;
     this.playing = false;
 
     var self = this;
 
-    var colors        = ["white", "#FF5959", "#FFB84D", "#78DDFF", "#80FF9F", "#ED74C9"];
-    var transformList = ['-webkit-transform', '-moz-transform', '-ms-transform', '-o-transform', 'transform'];
-    var bottleSize    = [5, 145];
+    var colors     = ["white", "#FF5959", "#FFB84D", "#78DDFF", "#80FF9F", "#ED74C9"];
+    var bottleSize = [5, 100];
 
     this.color     = colors[~~(Math.random() * 6)];
     this.leftPos   = .5 - bottleSize[0] / sz.width;
     this.rightPos  = .5 + bottleSize[0] / sz.width;
-    this.topPos    = 1 - 200 / sz.height;
-    this.bottomPos = 1 - 80 / sz.height;
+    this.topPos    = 1 - 130 / sz.height;
+    this.bottomPos = 1 - 70 / sz.height;
 
     this.left = function () {
         if (self.y < self.topPos) {
@@ -59,26 +49,60 @@ function Wish(data, $container, sz, callback) {
     };
 
     this.exit = function () {
-        return self.y < -0.1;
+        return self.y < -0.1 || self.x < -0.1 || self.x > 1.1;
     };
 
     this.move = function () {
-        transformList.forEach(function (t) {
-            self.el.style[t] = 'translateX(' + (self.x * sz.width) + 'px) translateY(' + (self.y * sz.height) + 'px)';
-        });
-        self.el.style['color'] = (!self.left() && !self.right() && self.y > self.topPos) ? 'transparent' : self.color;
+//        transformList.forEach(function (t) {
+//            self.el.style[t] = 'translateX(' + (self.x * sz.width) + 'px) translateY(' + (self.y * sz.height) + 'px)';
+//        });
+
+        var x = self.x * sz.width * 2;
+        var y = self.y * sz.height * 2;
+
+        ctx.beginPath();
+        ctx.arc(x, y, self.r, 0, Math.PI * 2, true);
+        ctx.closePath();
+
+        var gradient  = ctx.createRadialGradient(x, y, 0, x, y, self.r);
+        gradient.addColorStop(0., 'rgba(255, 255, 255, .7)');
+        gradient.addColorStop(.3, 'rgba(255, 255, 255, .4)');
+        gradient.addColorStop(1., 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        if (self.r < 60) {
+            self.r += 0.3;
+        }
+
+        if (self.y < self.topPos) {
+            ctx.fillStyle = self.color;
+            ctx.font      = "24px sans-serif";
+            ctx.fillText(self.firstLine, x - 40, y - 10, 120);
+            ctx.fillText(self.secondLine, x - 40, y + 20, 120);
+        }
     };
 
-    this.el.onmouseover = function () {
-        self.hover = true;
-    };
+    /*
+     this.el.onmouseover = function () {
+     self.hover = true;
+     };
 
-    this.el.onmouseout = function () {
-        self.hover = false;
-    };
+     this.el.onmouseout = function () {
+     self.hover = false;
+     };
 
-    this.el.onclick = function () {
-        callback();
+     this.el.onclick = function () {
+     callback();
+     };
+     */
+
+    this.detectClick = function (x, y) {
+        if (x > this.x - 50 / sz.width && x < this.x + 50 / sz.width && y > this.y - 50 / sz.height && y < this.y + 50 / sz.height) {
+            callback();
+            return true;
+        }
+        return false;
     };
 }
 
@@ -118,7 +142,6 @@ Wish.prototype.frame = function () {
 };
 
 Wish.prototype.play = function () {
-    this.$container.append(this.el);
     this.playing = true;
 
     var self = this;
@@ -128,8 +151,12 @@ Wish.prototype.play = function () {
             return;
         }
         if (!self.hover) {
-            self.fy = self.fy * 5 + (-self.dy / 3) + (Math.random() * .002 - 0.0009);
-            self.fx = self.fx * 5 + (-self.dx / 3) + (Math.random() * .002 - .001);
+            if (self.y > self.topPos) {
+                self.fy = 0.006;
+            } else {
+                self.fy = self.fy * 5 + (-self.dy / 3) + (Math.random() * .0096 - 0.0036) * 1.2;
+            }
+            self.fx = self.fx * 5 + (-self.dx / 3) + (Math.random() * .008 - .004) * 1.5;
 
             self.fx /= 6;
             self.fy /= 6;
@@ -147,7 +174,7 @@ Wish.prototype.stop = function () {
     this.playing = false;
 
     if (this.stopSetup) {
-        this.stopSetup();
+        this.stopSetup.call(this);
     }
 };
 

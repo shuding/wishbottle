@@ -11,24 +11,36 @@
     var dataQueue = [];
     var queueSt   = 0;
     var queueEd   = 0;
-    var queueLn   = 10;
+    var queueLn   = 15;
 
     var playList = [];
 
     var api = new window.API($);
 
     function framePlay() {
+        el.elCtx.clearRect(0, 0, va.width * 2, va.height * 2);
         playList.forEach(function (arr) {
-            arr[1].call(arr[0]);
+            if (arr.length) {
+                arr[1].call(arr[0]);
+            }
         });
         requestAnimationFrame(framePlay);
+    }
+
+    function canvasClick(x, y) {
+        for (var i = 0; i < playList.length; ++i)
+            if (playList[i].length) {
+                if (playList[i][0].detectClick(x, y)) {
+                    return;
+                }
+            }
     }
 
     function addCache(data) {
         [].forEach.call(data, function (item) {
             if (typeof dataCache[item._id] === 'undefined') {
                 dataCache[item._id] = true;
-                var wish            = new window.Wish(item, el.$canvasElements, va, function () {
+                var wish            = new window.Wish(item, el.elCtx, va, function () {
                     editorCompile(item);
                     editorShow();
                 });
@@ -50,6 +62,11 @@
 
     function queueInit() {
         var stop = function () {
+            for (var i = 0; i < playList.length; ++i) {
+                if (playList[i][0] == this) {
+                    playList[i] = [];
+                }
+            }
             if (queueEd < dataQueue.length) {
                 dataQueue[queueEd].play();
                 dataQueue[queueEd].stopSetup(stop);
@@ -62,12 +79,18 @@
 
         queuePush(function (err) {
             if (!err) {
+                var cnt = 0;
                 while (queueEd - queueSt < queueLn) {
                     if (queueEd < dataQueue.length) {
-                        dataQueue[queueEd].stopSetup(stop);
-                        dataQueue[queueEd].play();
-                        playList.push([dataQueue[queueEd], dataQueue[queueEd].frame]);
+                        (function (index, cnt) {
+                            setTimeout(function () {
+                                dataQueue[index].stopSetup(stop);
+                                dataQueue[index].play();
+                                playList.push([dataQueue[index], dataQueue[index].frame]);
+                            }, cnt * 1500);
+                        })(queueEd, cnt);
                         queueEd++;
+                        cnt++;
                     } else {
                         queueInit();
                         break;
@@ -90,20 +113,20 @@
             if (typeof va.elements === 'undefined') {
                 va.elements = [];
             }
-            element.width  = va.width;
-            element.height = va.height;
+            element.width  = va.width * 2;
+            element.height = va.height * 2;
             va.elements.push(element);
         };
         $(window).on('resize', function () {
             va.width  = window.innerWidth;
             va.height = window.innerHeight;
             va.elements && va.elements.forEach(function (element) {
-                element.width  = va.width;
-                element.height = va.height;
+                element.width  = va.width * 2;
+                element.height = va.height * 2;
             });
         });
 
-        el.$container.addClass('gradient-' + (~~(Math.random() * 5)));
+        //el.$container.addClass('gradient-' + (~~(Math.random() * 5)));
 
         if (window.Modernizr.canvas) {
             callback();
@@ -151,7 +174,13 @@
         el.$canvasElements   = $('#canvas-elements');
         el.$canvasBackground = $('#canvas-background');
         el.bgCtx             = el.$canvasBackground[0].getContext('2d');
+        el.elCtx             = el.$canvasElements[0].getContext('2d');
         va.bindSize(el.$canvasBackground[0]);
+        va.bindSize(el.$canvasElements[0]);
+
+        el.$canvasElements.click(function (event) {
+            canvasClick(event.pageX / va.width, event.pageY / va.height);
+        });
 
         var fireflies = [];
         for (var i = 0; i < 30; ++i) {
@@ -159,11 +188,11 @@
         }
 
         var drawFrame = function () {
-            el.bgCtx.clearRect(0, 0, va.width, va.height);
+            el.bgCtx.clearRect(0, 0, va.width * 2, va.height * 2);
             fireflies.forEach(function (ff) {
                 ff.blink();
                 ff.move();
-                ff.draw(el.bgCtx, va.width, va.height);
+                ff.draw(el.bgCtx, va.width * 2, va.height * 2);
             });
             requestAnimationFrame(drawFrame);
         };
@@ -188,14 +217,14 @@
     }
 
     function editorShow() {
-        el.$canvas.addClass('scaled');
+        el.$container.addClass('scaled');
         el.$editor.addClass('expanded');
         st.canvasBackgroundScaled = true;
     }
 
     function editorHide() {
         setTimeout(editorUnlock, 1000);
-        el.$canvas.removeClass('scaled');
+        el.$container.removeClass('scaled');
         el.$editor.removeClass('expanded');
         st.canvasBackgroundScaled = false;
         window.location.hash      = '';
@@ -234,15 +263,12 @@
                 }
             });
         });
-
-        el.$buttonShare.click(function () {
-
-        });
     }
 
     function editorCompile(data) {
         el.$editorBox.find('input').val(data.name);
         el.$editorBox.find('textarea').val(data.content);
+        el.$editorBox.find('p').text((new Date(data.timestamp)).toLocaleString());
         window.location.hash = data._id;
         editorLock(data.name);
     }
@@ -261,7 +287,10 @@
     }
 
     function orientationInit() {
+
         el.$canvas = $('#canvas');
+
+        return;
 
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function (event) {
