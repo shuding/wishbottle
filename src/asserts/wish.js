@@ -16,7 +16,7 @@ function Wish(data, ctx, sz, callback) {
     this.fx = 0;
     this.r  = 0;
 
-    this.hover   = false;
+    this.paused   = false;
     this.playing = false;
 
     var self = this;
@@ -83,20 +83,6 @@ function Wish(data, ctx, sz, callback) {
         }
     };
 
-    /*
-     this.el.onmouseover = function () {
-     self.hover = true;
-     };
-
-     this.el.onmouseout = function () {
-     self.hover = false;
-     };
-
-     this.el.onclick = function () {
-     callback();
-     };
-     */
-
     this.detectClick = function (x, y) {
         if (x > this.x - 50 / sz.width && x < this.x + 50 / sz.width && y > this.y - 50 / sz.height && y < this.y + 50 / sz.height) {
             callback();
@@ -107,7 +93,7 @@ function Wish(data, ctx, sz, callback) {
 }
 
 Wish.prototype.frame = function () {
-    if (this.hover) {
+    if (this.paused) {
         // Paused
         return;
     }
@@ -141,6 +127,14 @@ Wish.prototype.frame = function () {
     this.move();
 };
 
+Wish.prototype.pause = function () {
+    this.paused = true;
+};
+
+Wish.prototype.continue = function () {
+    this.paused = false;
+};
+
 Wish.prototype.play = function () {
     this.playing = true;
 
@@ -150,7 +144,7 @@ Wish.prototype.play = function () {
         if (!self.playing) {
             return;
         }
-        if (!self.hover) {
+        if (!self.paused) {
             if (self.y > self.topPos) {
                 self.fy = 0.006;
             } else {

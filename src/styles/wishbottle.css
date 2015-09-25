@@ -38,20 +38,18 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
-
 html {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-
 body {
   position: absolute;
   width: 100%;
   height: 100%;
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
-  color: #f6f6f6;
+  color: #F6F6F6;
   overflow: hidden;
 
   -webkit-user-select: none;
@@ -67,7 +65,6 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
 }
-
 .button {
   border: 1px solid;
   border-radius: 4px;
@@ -75,57 +72,51 @@ body {
 .button.no-frame {
   border: none;
 }
-
 .gradient-0 {
-  background: -webkit-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* IE10 */
-  background:      -o-linear-gradient(to bottom, #485563 10%, #29323c 90%); /* Opera 11.10+ */
-  background:         linear-gradient(to bottom, #485563 10%, #29323c 90%); /* W3C */
+  background: -webkit-linear-gradient(to bottom, #485563 10%, #29323C 90%); /* Chrome 10+, Saf5.1+ */
+  background: -moz-linear-gradient(to bottom, #485563 10%, #29323C 90%); /* FF3.6+ */
+  background: -ms-linear-gradient(to bottom, #485563 10%, #29323C 90%); /* IE10 */
+  background: -o-linear-gradient(to bottom, #485563 10%, #29323C 90%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #485563 10%, #29323C 90%); /* W3C */
 }
-
 .gradient-1 {
   background: -webkit-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* IE10 */
-  background:      -o-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* Opera 11.10+ */
-  background:         linear-gradient(to bottom, #005C97 10%, #363795 90%); /* W3C */
+  background: -moz-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* FF3.6+ */
+  background: -ms-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* IE10 */
+  background: -o-linear-gradient(to bottom, #005C97 10%, #363795 90%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #005C97 10%, #363795 90%); /* W3C */
 }
-
 .gradient-2 {
-  background: -webkit-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* IE10 */
-  background:      -o-linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* Opera 11.10+ */
-  background:         linear-gradient(to bottom, #f46b45 10%, #eea849 90%); /* W3C */
+  background: -webkit-linear-gradient(to bottom, #F46B45 10%, #EEA849 90%); /* Chrome 10+, Saf5.1+ */
+  background: -moz-linear-gradient(to bottom, #F46B45 10%, #EEA849 90%); /* FF3.6+ */
+  background: -ms-linear-gradient(to bottom, #F46B45 10%, #EEA849 90%); /* IE10 */
+  background: -o-linear-gradient(to bottom, #F46B45 10%, #EEA849 90%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #F46B45 10%, #EEA849 90%); /* W3C */
 }
-
 .gradient-3 {
   background: -webkit-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* IE10 */
-  background:      -o-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* Opera 11.10+ */
-  background:         linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* W3C */
+  background: -moz-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* FF3.6+ */
+  background: -ms-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* IE10 */
+  background: -o-linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #E55D87 10%, #5FC3E4 90%); /* W3C */
 }
-
 .gradient-4 {
   background: -webkit-linear-gradient(to bottom, #232526 10%, #414345 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(to bottom, #232526 10%, #414345 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(to bottom, #232526 10%, #414345 90%); /* IE10 */
-  background:      -o-linear-gradient(to bottom, #232526 10%, #414345 90%); /* Opera 11.10+ */
-  background:         linear-gradient(to bottom, #232526 10%, #414345 90%); /* W3C */
+  background: -moz-linear-gradient(to bottom, #232526 10%, #414345 90%); /* FF3.6+ */
+  background: -ms-linear-gradient(to bottom, #232526 10%, #414345 90%); /* IE10 */
+  background: -o-linear-gradient(to bottom, #232526 10%, #414345 90%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #232526 10%, #414345 90%); /* W3C */
 }
-
 #container {
   position: absolute;
   height: 100%;
   width: 100%;
   background-color: #000;
-  background-size: contain;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
   background-image: url(bg.jpg);
 }
-
 #control-buttons {
   position: absolute;
   top: 0;
@@ -133,12 +124,10 @@ body {
   padding: 10px 10px;
   z-index: 5;
 }
-
 #mute-button {
   margin-left: 10px;
   cursor: pointer;
 }
-
 #copyright {
   position: absolute;
   bottom: 0;
@@ -146,25 +135,21 @@ body {
   font-size: 12px;
   z-index: 0;
 }
-
 #copyright img {
   width: 37px;
   height: 18px;
   vertical-align: baseline;
 }
-
 #canvas {
   position: absolute;
   height: 100%;
   width: 100%;
   z-index: 1;
 }
-
 #canvas-background, #canvas-elements {
   position: absolute;
   z-index: 2;
 }
-
 #canvas-background, #canvas-elements {
   width: 100%;
   height: 100%;
@@ -180,7 +165,6 @@ body {
   -o-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
 }
-
 .scaled #canvas-background {
   -webkit-transform: scale(4);
   -moz-transform: scale(4);
@@ -189,7 +173,6 @@ body {
   transform: scale(4);
   opacity: 0;
 }
-
 .scaled #canvas-elements {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
@@ -197,7 +180,6 @@ body {
   -ms-filter: blur(5px);
   filter: blur(5px);
 }
-
 #editor {
   position: absolute;
   top: 0;
@@ -208,7 +190,6 @@ body {
   z-index: 4;
   pointer-events: none;
 }
-
 #bottle-container {
   position: absolute;
   left: 0;
@@ -219,7 +200,6 @@ body {
   margin: auto;
   z-index: 3;
 }
-
 #bottle {
   width: 72px;
   height: 115px;
@@ -227,7 +207,6 @@ body {
   background-size: 100% 100%;
   cursor: pointer;
 }
-
 #editor-box {
   position: absolute;
   width: 90%;
@@ -242,24 +221,12 @@ body {
 
   border: 1px solid #333;
   border-radius: 5px;
-  color: #fff;
+  color: #FFF;
   background: rgba(0, 0, 0, 0.9);
 
   -webkit-box-shadow: 0 5px 20px 1px rgba(0, 0, 0, .1);
   -moz-box-shadow: 0 5px 20px 1px rgba(0, 0, 0, .1);
   box-shadow: 0 5px 20px 1px rgba(0, 0, 0, .1);
-
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  -ms-transform: scale(0);
-  -o-transform: scale(0);
-  transform: scale(0);
-
-  -webkit-transform-origin: bottom;
-  -moz-transform-origin: bottom;
-  -ms-transform-origin: bottom;
-  -o-transform-origin: bottom;
-  transform-origin: bottom;
 
   -webkit-transition: all .8s cubic-bezier(0.895, 0.030, 0.105, 0.970);
   -moz-transition: all .8s cubic-bezier(0.895, 0.030, 0.105, 0.970);
@@ -272,11 +239,6 @@ body {
   -webkit-box-shadow: 0 0 200px 200px rgba(0, 0, 0, .5);
   -moz-box-shadow: 0 0 200px 200px rgba(0, 0, 0, .5);
   box-shadow: 0 0 200px 200px rgba(0, 0, 0, .5);
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transform: scale(1);
 }
 #editor.expanded {
   pointer-events: all;
@@ -299,10 +261,10 @@ body {
   resize: none;
 }
 #editor-box input:focus, #editor-box textarea:focus {
-  border-color: #ccc;
+  border-color: #CCC;
 }
 #editor-box textarea[disabled] {
-  color: #fff;
+  color: #FFF !important;
   background: none;
 }
 .input-container {
@@ -312,7 +274,8 @@ body {
   box-sizing: border-box;
 }
 #editor-box h3 {
-  text-align: center;
+  text-align: left;
+  padding-left: 20px;
 }
 #button-container {
   position: absolute;
@@ -335,7 +298,7 @@ body {
   -moz-border-radius: 20px;
   border-radius: 20px;
   font-weight: 900;
-  color: #fff;
+  color: #FFF;
   outline: none;
   cursor: pointer;
 }
@@ -352,14 +315,13 @@ button#button-close {
   background: none;
   text-shadow: none;
   border-color: #333;
-  color: #fff;
+  color: #FFF;
 }
 #button-share {
   display: none;
   float: left;
   width: calc(100% - 100px);
-  background: #FF0455;
-  text-shadow: 0 0 1px #F00;
+  background: transparent;
 }
 #button-submit {
   float: left;
@@ -371,7 +333,9 @@ button#button-close {
   display: none;
 }
 #editor-box.submitted textarea {
+  height: 160px;
   border: none;
+  font-weight: bolder;
 }
 textarea + p {
   display: none;
@@ -393,7 +357,7 @@ textarea + p {
   line-height: 15px;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  text-shadow: 0 0 30px #fff;
+  text-shadow: 0 0 30px #FFF;
   cursor: pointer;
   color: transparent;
   background-image: -webkit-radial-gradient(50%, 50% 50%, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0));
@@ -405,7 +369,6 @@ textarea + p {
   -o-transition: color 1s ease, opacity 1s ease;
   transition: color 1s ease, opacity 1s ease;
 }
-
 #canvas-elements > div > i {
   position: absolute;
   width: 0;
@@ -414,5 +377,5 @@ textarea + p {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  box-shadow: 0 0 8px 3px #fff;
+  box-shadow: 0 0 8px 3px #FFF;
 }

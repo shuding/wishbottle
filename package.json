@@ -32,6 +32,7 @@
     "browsernizr": "^1.1.0",
     "jquery": "^2.1.4",
     "modernizr": "^3.0.0",
+    "moment": "^2.10.6",
     "normalize.css": "^3.0.3"
   },
   "devDependencies": {

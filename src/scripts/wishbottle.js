@@ -27,13 +27,30 @@
         requestAnimationFrame(framePlay);
     }
 
+    function pauseAnimation() {
+        playList.forEach(function (arr) {
+            if (arr.length) {
+                arr[0].pause();
+            }
+        });
+    }
+
+    function continueAnimation() {
+        playList.forEach(function (arr) {
+            if (arr.length) {
+                arr[0].continue();
+            }
+        });
+    }
+
     function canvasClick(x, y) {
-        for (var i = 0; i < playList.length; ++i)
+        for (var i = 0; i < playList.length; ++i) {
             if (playList[i].length) {
                 if (playList[i][0].detectClick(x, y)) {
                     return;
                 }
             }
+        }
     }
 
     function addCache(data) {
@@ -132,13 +149,6 @@
             callback();
         }
 
-        // WeChat
-
-        window.wx && window.wx.onMenuShareTimeline({
-            title: 'aaa', // 分享标题
-            link: window.location.href, // 分享链接
-            imgUrl: ''
-        });
     }
 
     function backgroundMusicInit() {
@@ -220,6 +230,7 @@
         el.$container.addClass('scaled');
         el.$editor.addClass('expanded');
         st.canvasBackgroundScaled = true;
+        pauseAnimation();
     }
 
     function editorHide() {
@@ -228,6 +239,19 @@
         el.$editor.removeClass('expanded');
         st.canvasBackgroundScaled = false;
         window.location.hash      = '';
+        continueAnimation();
+
+        // Reset share
+        wx.onMenuShareTimeline({
+            title:   '旦愿: 写下你的祝福',
+            link:    window.location.href.split('#')[0],
+            imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
+            success: function () {
+                alert('分享成功!');
+            },
+            cancel:  function () {
+            }
+        });
     }
 
     function editorInit() {
@@ -255,11 +279,31 @@
                 content: el.$editorBox.find('textarea').val()
             };
 
-            api.post(data, function (err, data) {
+            api.post(data, function (err, res) {
                 if (err) {
                     alert(err);
                 } else {
                     editorLock(data.name);
+                    try {
+                        var r                = JSON.parse(res);
+                        window.location.hash = r._id;
+
+                        history.pushState({}, title + '的祝福', "index.html" + '?id=' + r._id);
+                        var url   = window.location.href.split('#')[0];
+
+                        wx.onMenuShareTimeline({
+                            title:   '旦愿: ' + title + ' 的祝福',
+                            link:    url,
+                            imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
+                            success: function () {
+                                alert('分享成功!');
+                            },
+                            cancel:  function () {
+                            }
+                        });
+                        
+                    } catch (err) {
+                    }
                 }
             });
         });
@@ -268,9 +312,26 @@
     function editorCompile(data) {
         el.$editorBox.find('input').val(data.name);
         el.$editorBox.find('textarea').val(data.content);
-        el.$editorBox.find('p').text((new Date(data.timestamp)).toLocaleString());
+        el.$editorBox.find('p').text(moment(new Date(data.timestamp)).format('lll'));
         window.location.hash = data._id;
         editorLock(data.name);
+
+        var _id   = data._id;
+        var title = data.name;
+
+        history.pushState({}, title + '的祝福', "index.html" + '?id=' + _id);
+        var url   = window.location.href.split('#')[0];
+
+        wx.onMenuShareTimeline({
+            title:   '旦愿: ' + title + ' 的祝福',
+            link:    url,
+            imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
+            success: function () {
+                alert('分享成功!');
+            },
+            cancel:  function () {
+            }
+        });
     }
 
     function bottleInit() {
@@ -287,21 +348,18 @@
     }
 
     function orientationInit() {
-
         el.$canvas = $('#canvas');
-
-        return;
-
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', function (event) {
-                var x = Math.floor(event.beta);
-                var y = Math.floor(event.gamma);
-                el.$canvas.css({
-                    'margin-left': y + 'px',
-                    'margin-top':  x + 'px'
-                });
-            });
-        }
+        /*
+         if (window.DeviceOrientationEvent) {
+         window.addEventListener('deviceorientation', function (event) {
+         var x = Math.floor(event.beta);
+         var y = Math.floor(event.gamma);
+         el.$canvas.css({
+         'margin-left': y + 'px',
+         'margin-top':  x + 'px'
+         });
+         });
+         }*/
     }
 
     function touchmovePrevent() {
@@ -318,14 +376,24 @@
 
     function detectHash() {
 
-        var hash = window.location.hash;
-        if (hash && hash !== '#') {
-            try {
-                hash = hash.split('#')[1];
-            } catch (err) {
-                return;
+        var hash = '';
+
+        if (window.location.hash) {
+            hash = window.location.hash.split('#')[1];
+        }
+        if (!hash) {
+            if (window.location.search) {
+                var k = window.location.search.split('?')[1].split('&');
+                for (var i = 0; i < k.length; ++i) {
+                    if (k[i].split('=')[0] == 'id') {
+                        hash = k[i].split('=')[1];
+                        break;
+                    }
+                }
             }
-        } else {
+        }
+
+        if (!hash) {
             return;
         }
 
@@ -349,14 +417,44 @@
         touchmovePrevent();
         modernizrInit(function () {
             // Canvas valid
-            backgroundCanvasInit();
-            bottleInit();
-            editorInit();
-            orientationInit();
-            queueInit();
-            framePlay();
 
-            detectHash();
+            var url = window.location.href.split('#')[0];
+
+            api.signature({
+                url: url
+            }, function (err, data) {
+                data = JSON.parse(data);
+                wx.config({
+                    debug:     false,
+                    appId:     data.appId,
+                    timestamp: data.timestamp,
+                    nonceStr:  data.nonceStr,
+                    signature: data.signature,
+                    jsApiList: ['checkJsApi', 'onMenuShareTimeline']
+                });
+                wx.ready(function () {
+
+                    wx.onMenuShareTimeline({
+                        title:   '旦愿: 写下你的祝福',
+                        link:    window.location.href.split('#')[0],
+                        imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
+                        success: function () {
+                            alert('分享成功!');
+                        },
+                        cancel:  function () {
+                        }
+                    });
+
+                    backgroundCanvasInit();
+                    bottleInit();
+                    editorInit();
+                    orientationInit();
+                    queueInit();
+                    framePlay();
+
+                    detectHash();
+                });
+            });
         });
     }
 

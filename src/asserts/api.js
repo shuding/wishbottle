@@ -25,10 +25,11 @@ var API = function (jQuery) {
 
     this.domain = 'http://stu.fudan.edu.cn/wish_bottle/api';
     this.path   = {
-        post:   '/post',
-        get:    '/get',
-        star:   '/star',
-        unstar: '/unstar'
+        post:      '/post',
+        get:       '/get',
+        star:      '/star',
+        unstar:    '/unstar',
+        signature: '/ticket_server/get_signature'
     };
 };
 
@@ -51,9 +52,9 @@ API.prototype.post = function (data, callback) {
         contentType: 'application/json; charset=utf-8',
         dataType:    'json',
         data:        JSON.stringify(pack),
-        complete: function(jqXHR) {
-            if(jqXHR.readyState === 4) {
-                callback && callback(null, pack);
+        complete:    function (jqXHR) {
+            if (jqXHR.readyState === 4) {
+                callback && callback(null, jqXHR.responseText);
             }
         }
     });
@@ -65,7 +66,7 @@ API.prototype.get = function (data, callback) {
         pack.offset = 0;
     }
     if (typeof pack.type === 'undefined') {
-        pack.type = 'star';
+        pack.type = 'time';
     }
     pack.timestamp = (new Date()).getTime();
     this.jQuery.get(this.domain + this.path.get, pack).success(function (data) {
@@ -92,6 +93,22 @@ API.prototype.unstar = function (data, callback) {
     }
     this.jQuery.post(this.domain + this.path.unstar, pack).success(function (data) {
         callback && callback(null, data);
+    });
+};
+
+API.prototype.signature = function (data, callback) {
+    var pack = parseData(data, ['url']);
+    this.jQuery.ajax({
+        type:        'POST',
+        url:         this.domain + this.path.signature,
+        contentType: 'application/json; charset=utf-8',
+        dataType:    'json',
+        data:        JSON.stringify(pack),
+        complete:    function (jqXHR) {
+            if (jqXHR.readyState === 4) {
+                callback && callback(null, jqXHR.responseText);
+            }
+        }
     });
 };
 

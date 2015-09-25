@@ -5,6 +5,8 @@
 
 require('browsernizr/test/canvas');
 window.Modernizr = require('browsernizr');
+window.moment = require('moment');
+require('moment/locale/zh-cn');
 window.Firefly = require('./firefly');
 window.API = require('./api');
 window.Wish = require('./wish');
