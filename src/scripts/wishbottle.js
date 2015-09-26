@@ -243,7 +243,7 @@
 
         // Reset share
         wx.onMenuShareTimeline({
-            title:   '旦愿: 写下你的祝福',
+            title:   '旦愿: 写下你的祝福 | 中秋，复旦人心在一起',
             link:    window.location.href.split('#')[0],
             imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
             success: function () {
@@ -289,10 +289,10 @@
                         window.location.hash = r._id;
 
                         history.pushState({}, title + '的祝福', "index.html" + '?id=' + r._id);
-                        var url   = window.location.href.split('#')[0];
+                        var url              = window.location.href.split('#')[0];
 
                         wx.onMenuShareTimeline({
-                            title:   '旦愿: ' + title + ' 的祝福',
+                            title:   '旦愿: ' + title + ' 的祝福 | 中秋，复旦人心在一起',
                             link:    url,
                             imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
                             success: function () {
@@ -301,7 +301,7 @@
                             cancel:  function () {
                             }
                         });
-                        
+
                     } catch (err) {
                     }
                 }
@@ -323,7 +323,7 @@
         var url   = window.location.href.split('#')[0];
 
         wx.onMenuShareTimeline({
-            title:   '旦愿: ' + title + ' 的祝福',
+            title:   '旦愿: ' + title + ' 的祝福 | 中秋，复旦人心在一起',
             link:    url,
             imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
             success: function () {
@@ -430,12 +430,22 @@
                     timestamp: data.timestamp,
                     nonceStr:  data.nonceStr,
                     signature: data.signature,
-                    jsApiList: ['checkJsApi', 'onMenuShareTimeline']
+                    jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage']
                 });
                 wx.ready(function () {
+                    wx.onMenuShareAppMessage({
+                        title:   '旦愿: 写下你的祝福',
+                        desc:    '中秋，复旦人心在一起',
+                        link:    '',
+                        imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
+                        success: function () {
+                        },
+                        cancel:  function () {
+                        }
+                    });
 
                     wx.onMenuShareTimeline({
-                        title:   '旦愿: 写下你的祝福',
+                        title:   '旦愿: 写下你的祝福 | 中秋，复旦人心在一起',
                         link:    window.location.href.split('#')[0],
                         imgUrl:  'http://stu.fudan.edu.cn/wish_bottle/static/stu_icon.png',
                         success: function () {
@@ -445,15 +455,16 @@
                         }
                     });
 
-                    backgroundCanvasInit();
-                    bottleInit();
-                    editorInit();
-                    orientationInit();
-                    queueInit();
-                    framePlay();
-
-                    detectHash();
                 });
+
+                backgroundCanvasInit();
+                bottleInit();
+                editorInit();
+                orientationInit();
+                queueInit();
+                framePlay();
+
+                detectHash();
             });
         });
     }
