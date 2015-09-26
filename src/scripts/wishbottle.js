@@ -425,7 +425,7 @@
             }, function (err, data) {
                 data = JSON.parse(data);
                 wx.config({
-                    debug:     false,
+                    debug:     true,
                     appId:     data.appId,
                     timestamp: data.timestamp,
                     nonceStr:  data.nonceStr,
